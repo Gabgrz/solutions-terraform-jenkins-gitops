@@ -12,8 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-master:
-  tag: "2.248"
+controller:
+  componentName: "jenkins-controller"
+  image: "jenkins/jenkins"
+  imagePullPolicy: "Always"
   containerEnv:
     - name: PROJECT_ID
       valueFrom:

@@ -191,8 +191,8 @@ resource "helm_release" "jenkins" {
   name       = "jenkins"
   repository = "https://charts.jenkins.io"
   chart      = "jenkins"
-  version    = "1.9.18"
-  timeout    = 1200
+  version    = "3.11.4"
+  timeout    = 180
 
   values = [data.local_file.helm_chart_values.content]
 
