@@ -18,6 +18,11 @@ controller:
   imagePullPolicy: "Always"
   jenkinsUrl: "http://${kubernetes_endpoint}:80"
   containerEnv:
+    - name: kubernetes_endpoint
+      valueFrom:
+        secretKeyRef:
+            name: jenkins-k8s-config
+            key: kubernetes_endpoint
     - name: PROJECT_ID
       valueFrom:
         secretKeyRef:
