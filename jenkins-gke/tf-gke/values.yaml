@@ -16,7 +16,6 @@ controller:
   componentName: "jenkins-controller"
   image: "jenkins/jenkins"
   imagePullPolicy: "Always"
-  jenkinsUrl: "http://${kubernetes_endpoint}:80"
   containerEnv:
     - name: kubernetes_endpoint
       valueFrom:
