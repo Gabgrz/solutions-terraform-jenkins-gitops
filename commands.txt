@@ -12,7 +12,7 @@ docker run -i -t hashicorp/terraform:0.12.6 plan
 PROJECT_ID=engaged-purpose-342203
 GITHUB_USER=gabgrz
 GITHUB_EMAIL=gab.120gg@gmail.com
-GITHUB_TOKEN="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"
+GITHUB_TOKEN=SECRET
 gcloud config set project $PROJECT_ID
 
 
