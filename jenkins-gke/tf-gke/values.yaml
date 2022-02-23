@@ -46,9 +46,9 @@ controller:
   serviceType: LoadBalancer
   installPlugins:
     - kubernetes:1.26.2
-    - workflow-job:2.41
+    - workflow-job:1145.v7f2433caa07f
     - workflow-aggregator:2.6
-    - credentials-binding:1.23
+    - credentials-binding:1.27
     - git:4.10.1
     - blueocean:1.23.2
     - docker-custom-build-environment:1.7.3
