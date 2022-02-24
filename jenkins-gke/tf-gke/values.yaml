@@ -12,9 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-master:
-  tag: "2.243"
+controller:
+  componentName: "jenkins-controller"
+  image: "jenkins/jenkins"
+  imagePullPolicy: "Always"
   containerEnv:
+    - name: kubernetes_endpoint
+      valueFrom:
+        secretKeyRef:
+            name: jenkins-k8s-config
+            key: kubernetes_endpoint
     - name: PROJECT_ID
       valueFrom:
         secretKeyRef:
@@ -43,19 +50,19 @@ master:
   servicePort: 80
   serviceType: LoadBalancer
   installPlugins:
-    - kubernetes:1.26.2
-    - workflow-job:2.39
-    - workflow-aggregator:2.6
-    - credentials-binding:1.23
-    - git:4.3.0
-    - blueocean:1.23.2
-    - docker-custom-build-environment:1.7.3
-    - credentials:2.3.11
-    - docker-commons:1.17
-    - docker-workflow:1.23
-    - job-dsl:1.77
-    - configuration-as-code:1.41
-    - jdk-tool:1.4
+    - kubernetes
+    - workflow-job
+    - workflow-aggregator
+    - credentials-binding
+    - git
+    - blueocean
+    - docker-custom-build-environment
+    - credentials
+    - docker-commons
+    - docker-workflow
+    - job-dsl
+    - configuration-as-code
+    - jdk-tool
   JCasC:
     enabled: true
     configScripts:
@@ -100,7 +107,7 @@ master:
                               label: "terraform-exec"
                               containers:
                                 - name: "terraform"
-                                  image: "hashicorp/terraform:light"
+                                  image: "hashicorp/terraform:0.12.29"
                                   alwaysPullImage: false
                                   workingDir: "/home/jenkins/agent"
                                   ttyEnabled: true

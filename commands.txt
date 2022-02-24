@@ -1,0 +1,47 @@
+sed -i.bak "s/PROJECT_ID/${PROJECT_ID}/g" ./example-pipelines/environments/*/terraform.tfvars
+sed -i.bak "s/PROJECT_ID/${PROJECT_ID}/g" ./example-pipelines/environments/*/backend.tf
+
+sed -i.bak "s/PROJECT_ID/${PROJECT_ID}/g" ./jenkins-gke/tf-gke/terraform.tfvars
+sed -i.bak "s/PROJECT_ID/${PROJECT_ID}/g" ./jenkins-gke/tf-gke/backend.tf
+
+
+sudo apt install terraform=0.12.6
+docker run -i -t hashicorp/terraform:0.12.6 plan
+
+
+PROJECT_ID=engaged-purpose-342203
+GITHUB_USER=gabgrz
+GITHUB_EMAIL=gab.120gg@gmail.com
+GITHUB_TOKEN=SECRET
+gcloud config set project $PROJECT_ID
+
+
+JENKINS_IP=$(kubectl get service jenkins -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+JENKINS_PASSWORD=$(kubectl get secret jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+printf "Jenkins url: http://$JENKINS_IP\nJenkins user: admin\nJenkins password: $JENKINS_PASSWORD\n"
+
+Jenkins url: http://35.188.43.5
+Jenkins user: admin
+Jenkins password: 34enQnF7Ht
+
+
+Jenkins variables
+echo $PROJECT_ID
+echo $GITHUB_USER
+echo $GITHUB_TOKEN
+
+echo $GITHUB_USERNAME
+echo $GITHUB_REPO
+
+-------------
+
+cd jenkins-gke/tf-gke/
+terraform init
+terraform plan --var "github_username=$GITHUB_USER" --var "github_token=$GITHUB_TOKEN"
+terraform apply --auto-approve --var "github_username=$GITHUB_USER" --var "github_token=$GITHUB_TOKEN"
+
+terraform apply --var "github_username=$GITHUB_USER" --var "github_token=$GITHUB_TOKEN" --target=module.jenkins-gke.google_container_node_pool.pools
+
+
+Updated and restarted Jenkins
+Need to run helm to add official repo
